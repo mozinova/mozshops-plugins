@@ -1,0 +1,70 @@
+  <div class="bg-background text-foreground min-h-screen p-4">
+    <div class="py-8" id="main">
+
+        <h2 class="text-2xl font-semibold text-center mb-6">Os nossos productos</h2>
+         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" >
+            <% if (shop.length>0){ 
+                    shop[0].products.forEach(item=>{
+%>
+      <div class="border border-border p-4 rounded-lg hover:shadow-lg" onclick="openResource(
+                '<%= item.id %>',this)">
+        <img src="<%= item.product_photos %>" alt="Product"  class="mb-3 rounded-lg" />
+        <h3 class="text-xl font-medium"><%= item.product_name %></h3>
+        <p class="text-muted-foreground" style="height: 50px;overflow-y:hidden;">
+            <%= item.product_description %>
+        </p>
+        <span class="block mt-2 text-primary font-bold"><%= item.quantity==0?"esgotado":item.price+" MZN" %> </span>
+      </div>
+<% }); }%>
+            </div>
+    <% if (shop[0].products.length==0) {
+    %>
+         <center>
+            <h1>
+                Essa loja nao possui nenhum producto ainda!
+            </h1>
+         </center>
+    <%
+    }
+  %></div>
+</div>
+<script type="text/javascript">
+                const itsOwner=        <%= typeof active_plan!=="undefined"  %>;
+
+                function openResource(id,el){
+                    const resUrl="/shop/<%= shop[0].id %>/"+id;
+                    if(itsOwner){
+                        swal({
+                            title:"Tem deseja remover esse produto?",
+                            text:"Nao podera anular isso",
+                            icon:"warning",
+                            dangerMode:true,
+                        }).then(willDelete=>{
+                            if(willDelete){
+                                showProgress();
+                                const url="/api/admin/deleteresource?id="+id;
+                                fetch(url,{
+                                    method:"POST"
+                                }).then(res=>{
+                                    hideProgress();
+                                    if(res.ok){
+                                        window.location.reload();
+                                    }
+                                }).catch(err=>{
+                                    hideProgress();
+                                })
+                            }
+                            else {
+
+                            }
+                        })
+                        return;
+                    }
+                    if(el.getAttribute("data-quantity")=="0"){
+                        swal("Artigo nao disponivel","O recurso nao esta mais disponivel","error");
+                    }
+                    else {
+                        window.location.href=resUrl;
+                    }
+                }
+            </script>   

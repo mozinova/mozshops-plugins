@@ -1,0 +1,20 @@
+{
+  "name": "mozshops-plugins",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "node index.js"
+  },
+  "bin": {
+    "ms-plugins": "./plugins-cli.js"
+  },
+  "keywords": [],
+  "author": "Daniel Mucamba",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "ejs": "^3.1.10",
+    "express": "^4.21.2",
+    "fs-extra": "^11.3.0"
+  }
+}

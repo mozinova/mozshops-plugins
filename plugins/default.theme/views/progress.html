@@ -1,0 +1,55 @@
+<style type="text/css">
+	    
+#progressPage{
+  z-index:999999;
+  top:0px;
+  left:0px;
+  right:0;
+  bottom:0;
+  position: fixed ;
+  background: transparent ;
+}
+.progressContainer{
+  display: grid;
+  place-items: center;
+  height:100vh;
+}
+
+.loading {
+    border: 5px solid #f3f3f3;
+    border-radius: 50%;
+    border-top: 5px solid #3498db;
+    width: 40px;
+    height: 40px;
+    -webkit-animation: spin 2s linear infinite;
+    animation: spin 2s linear infinite;
+    margin: 20px auto;
+}
+
+@-webkit-keyframes spin {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+</style>
+<div id="progressPage">
+    <div class="progressContainer">
+     
+    <div class="loading"></div>
+    </div>
+  </div>
+  <script type="text/javascript">
+ const progressPage=document.getElementById("progressPage");
+function showProgress(){
+  progressPage.style.display="grid";
+}
+function hideProgress(){
+  progressPage.style.display="none";
+}
+hideProgress();
+  </script>

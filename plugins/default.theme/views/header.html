@@ -1,0 +1,138 @@
+<% if(typeof cart_details=== "undefined") { %>
+<%- link("v-products.html"); %>
+<% } %>
+<nav class="fixed bg-white w-full border-gray-200 dark:bg-gray-900">
+  <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+  <a class="flex items-center space-x-3 rtl:space-x-reverse" href="/shop/<%= meta.shop %> ">
+      
+        <% if(typeof cart=== "undefined") { %>
+      <img src="<%= meta.icone %>" class="h-8" alt="shop Logo" />
+      <% } else {
+      %>
+      <i class="fas fa-arrow-left"></i>
+      <%
+      }%>
+      <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white"><%= meta.name %></span>
+  </a>
+  <div class="flex md:order-2">
+    <button type="button" data-collapse-toggle="navbar-search" aria-controls="navbar-search" aria-expanded="false" class="md:hidden text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5 me-1">
+      <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+      </svg>
+      <span class="sr-only">pesquisar</span>
+    </button>
+    <div class="relative hidden md:block">
+     
+      <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+        <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+        </svg>
+        <span class="sr-only">Search icon</span>
+      </div>
+      <input type="text" class="block w-full p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 input-desktop" placeholder=" ( CTRL ) pesquisar..." onchange="search(this);" id="search">
+    </div>
+    <button data-collapse-toggle="navbar-search" type="button" class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600" aria-controls="navbar-search" aria-expanded="false">        <span class="fas fa-shopping-cart"></span>
+    </button>
+  </div>
+
+    <div class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1" id="navbar-search">
+   
+        <% if(typeof cart=== "undefined") { %>
+      <div class="relative mt-3 md:hidden">
+        <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+          <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+          </svg>
+        </div>
+        <input type="text" class="block w-full p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500  dark:focus:border-blue-500" id="search" onchange="search(this);" placeholder="Pesquisar na loja...">
+      </div>
+      
+      
+      <ul class="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+        <li>
+          <a onclick="vercarrinho();" class="block py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500" aria-current="page">
+            
+            <i class="fas fa-shopping-cart"></i> ver carrinho
+          </a>
+        </li>
+        <li>
+          <a class="block py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 md:dark:text-blue-500" aria-current="page" type="button" data-modal-target="perfil-modal" data-modal-toggle="perfil-modal" >
+            
+           sobre a loja
+          </a>
+        </li>
+        </li>
+      </ul>
+        <% } %>
+    </div>
+  </div>
+</nav>
+<script type="text/javascript">
+  const _api="/api/cart-manager";
+  const shop="<%= meta.shop %>";
+  const cartManager= {
+    get:async ()=>{
+      showProgress();
+      const req=await fetch(_api,{
+        method:"POST"
+      });
+      const res=await req.text();
+      if(res){
+        hideProgress();
+      }
+      return res;
+    },
+    set:async (str)=>{
+      showProgress();
+      const req=await fetch(_api,{
+        method:"POST",
+        headers:{
+          "Content-Type":"application/json"
+        },
+        body:str
+      });
+      const res=await req.text();
+      if(res){
+        hideProgress();
+      }else {
+        hideProgress();
+      }
+    },
+    remove:async (item)=>{
+      showProgress();
+      const cart=await getCart();
+      const index=cart.join(",").indexOf(item);
+      delete cart[index];
+      const data=filter(cart);
+      cartManager.set(JSON.stringify(data)).then(()=>{
+        window.location.href='/cart/<%= meta.shop %>';
+      });
+    }
+  }
+  const filter=(cart)=>{
+    const new_cart=[];
+    cart.forEach(item=>{
+        if(item!=null){
+            new_cart.push(item);
+        }
+    });
+    return new_cart;
+  }
+  async function getCart(){
+    const data=await cartManager.get();
+    if(data!=null){
+        return JSON.parse(data);
+    }
+    else { return []; }
+}
+async function vercarrinho(){
+  const go="/cart/<%= meta.shop %>/";
+  const carrinho= await getCart();
+  if(carrinho.length==0){
+    swal("O carrinho esta vazio","Adicione itens a sua lista de compras","error");
+  }
+  else {
+    window.location.href=go;
+  }
+}
+</script>

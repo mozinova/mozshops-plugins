@@ -1,0 +1,128 @@
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="<%- link_to('styles.css') %>">
+    <title><%= shop[0].shop_name %></title>
+    <link rel="icon" href="<%= shop[0].shop_icon %>">
+    
+  <script type="text/javascript" src="<%- link_to('sweetalert.min.js') %>"></script>
+
+    <meta name="description" content="<%= shop[0].shop_description %>">
+        <style>
+          *{
+            color: black ;
+          }
+        </style>
+        <style >
+                :root {
+          --background: 0 0% 100%;
+--foreground: 240 10% 3.9%;
+--card: 0 0% 100%;
+--card-foreground: 240 10% 3.9%;
+--popover: 0 0% 100%;
+--popover-foreground: 240 10% 3.9%;
+--primary: 240 5.9% 10%;
+--primary-foreground: 0 0% 98%;
+--secondary: 240 4.8% 95.9%;
+--secondary-foreground: 240 5.9% 10%;
+--muted: 240 4.8% 95.9%;
+--muted-foreground: 240 3.8% 46.1%;
+--accent: 240 4.8% 95.9%;
+--accent-foreground: 240 5.9% 10%;
+--destructive: 0 84.2% 60.2%;
+--destructive-foreground: 0 0% 98%;
+--border: 240 5.9% 90%;
+--input: 240 5.9% 90%;
+--ring: 240 5.9% 10%;
+--radius: 0.5rem;
+        }
+        .dark {
+          --background: 240 10% 3.9%;
+--foreground: 0 0% 98%;
+--card: 240 10% 3.9%;
+--card-foreground: 0 0% 98%;
+--popover: 240 10% 3.9%;
+--popover-foreground: 0 0% 98%;
+--primary: 0 0% 98%;
+--primary-foreground: 240 5.9% 10%;
+--secondary: 240 3.7% 15.9%;
+--secondary-foreground: 0 0% 98%;
+--muted: 240 3.7% 15.9%;
+--muted-foreground: 240 5% 64.9%;
+--accent: 240 3.7% 15.9%;
+--accent-foreground: 0 0% 98%;
+--destructive: 0 62.8% 30.6%;
+--destructive-foreground: 0 0% 98%;
+--border: 240 3.7% 15.9%;
+--input: 240 3.7% 15.9%;
+--ring: 240 4.9% 83.9%;
+        }
+      label {
+    font-size: 1em;
+    font-weight: 500;
+    margin-bottom: 8px;
+}
+
+input, select {
+    width: 100%;
+    padding: 10px;
+    font-size: 1em;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    transition: border-color 0.3s, box-shadow 0.3s;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+input:focus, select:focus {
+    border-color: #2980b9;
+    box-shadow: 0 0 8px rgba(41, 128, 185, 0.2);
+    outline: none;
+}
+
+        </style>
+   <link rel="stylesheet" type="text/css" href="<%- link_to('all.min.css') %>">
+<link rel="stylesheet" type="text/css" href="<%- link_to('fontawesome.min.css') %>">
+<link rel="stylesheet" type="text/css" href="<%- link_to('solid.min.css') %>">
+  </head>
+  <body>
+<%- link("progress.html"); %>
+<%- link("header.html"); %>
+<br><br>
+     <main>
+    <%- link("products.html") %>
+     </main>
+     <%- link("footer.html"); %> 
+</div>
+<script type="text/javascript">
+  window.addEventListener('keydown',(ev)=>{
+   console.log(ev.key);
+    if(ev.key=="Control"){
+      document.querySelector(".input-desktop").focus();
+    }
+  })
+    const nodes=document.querySelectorAll("#product_name");
+  const search=(el)=>{
+    console.log("search for:",el.value);
+    const found_nodes=[];
+    const main=document.getElementById("main");
+    nodes.forEach(item=>{
+      if(item.innerText.toLowerCase().replace(/\s/g,"").indexOf(el.value.toLowerCase().replace(/\s/g,'')) > -1 ){
+        found_nodes.push(item);
+      }
+    }); 
+    console.log(found_nodes);
+    if(found_nodes.length==0){
+      return swal("erro","a sua pesquisa nao encontrou nenhum resultado","error");
+    }
+    main.innerHTML="";
+    found_nodes.forEach( function(element, index) {
+      // statements
+      main.appendChild(element.parentElement);
+    });
+  }
+ </script>
+
+<script src="<%- link_to('_main.js') %>"></script>
+  </body>
+</html>

@@ -1,0 +1,7 @@
+{
+    "pageRoot":"./views",/* diretorio onde estao as views */
+    "@pages":{
+        "home":"home.html" /* pagina inicial dentro da pagina views */
+    },
+    "static":"./public/"/* pasta onde se encontram os arquivos estaticos */
+}
