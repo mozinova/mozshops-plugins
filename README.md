@@ -68,11 +68,11 @@ An example `theme.json` file:
 
 ```json
 {
-    "pageRoot": "./views", /* Directory containing view files */
+    "pageRoot": "./views", // Directory containing view files 
     "@pages": {
-        "home": "home.html" /* Initial page within the views folder */
+        "home": "home.html" //  Initial page within the views folder 
     },
-    "static": "./public/" /* Directory containing static assets */
+    "static": "./public/" // Directory containing static assets 
 }
 ```
 
