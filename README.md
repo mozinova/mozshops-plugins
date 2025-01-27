@@ -68,14 +68,16 @@ An example `theme.json` file:
 
 ```json
 {
-    "pageRoot": "./views", // Directory containing view files 
+    "pageRoot": "./views",
     "@pages": {
-        "home": "home.html" //  Initial page within the views folder 
+        "home": "home.html"  
     },
-    "static": "./public/" // Directory containing static assets 
+    "static": "./public/"
 }
 ```
-
+pageRoot -   Directory containing view files 
+@pages.home- Initial page within the views folder
+static- Directory containing static assets 
 ---
 
 ## Template Engine
